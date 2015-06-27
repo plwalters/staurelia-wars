@@ -1,0 +1,75 @@
+<template>
+  <a href="#" click.delegate="toggleOpen()">
+    <h4>
+    <i class="${open ? 'fa fa-chevron-down' : 'fa fa-chevron-right'}"></i> ${char.name}</h4>
+  </a>
+  <div class="row" show.bind="open">
+    <div class="col-xs-6">
+      <dl class="dl-horizontal">
+        <dt>Birth year</dt>
+        <dd>${char.birth_year}</dd>
+
+        <dt>Eye color</dt>
+        <dd>${char.eye_color}</dd>
+
+        <dt>Gender</dt>
+        <dd>${char.gender}</dd>
+
+        <dt>Hair color</dt>
+        <dd>${char.hair_color}</dd>
+
+        <dt>Height</dt>
+        <dd>${char.height}</dd>
+
+        <dt>Mass</dt>
+        <dd>${char.mass}</dd>
+
+        <dt>Url</dt>
+        <dd>${char.url}</dd>
+      </dl>
+    </div>
+    <div class="col-xs-6">
+      <dl class="dl-horizontal" show.bind="open">
+        <dt>Skin color</dt>
+        <dd>${char.skin_color}</dd>
+
+        <dt>Created</dt>
+        <dd>${char.created}</dd>
+
+        <dt>Edited</dt>
+        <dd>${char.edited}</dd>
+
+        <dt>Vehicles</dt>
+        <dd>${char.vehicles}</dd>
+
+        <dt>Species</dt>
+        <dd>${char.species}</dd>
+
+        <dt>Starships</dt>
+        <dd>${char.starships}</dd>
+
+        <dt>Homeworld</dt>
+        <dd>${char.homeworld}</dd>
+
+        <dt>Films</dt>
+        <dd>${char.films}</dd>
+      </dl>
+    </div>
+  </div>
+</template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

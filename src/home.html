@@ -1,0 +1,17 @@
+<template>
+  <require from="templates/character"></require>
+  <require from="templates/type-ahead"></require>
+  <section class="au-animate">
+    <h2>${heading}</h2>
+    <type-ahead options.bind="collections.planets" selected-option.two-way="selectedPlanet" text="name"></type-ahead>
+    <h2>
+      ${selectedPlanet ? selectedPlanet.name : ''}
+    </h2>
+    <h3>Residents:</h3>
+    <ul class="list-unstyled" if.bind="selectedPlanet">
+      <li repeat.for="resident of selectedPlanet.fetchedResidents">
+        <character char.bind="resident"></character>
+      </li>
+    </ul>
+  </section>
+</template>
