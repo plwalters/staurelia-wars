@@ -41,7 +41,12 @@ export class DataContext {
     if (response.content && response.content.next) {
       this.getResource(response.content.next).then(resp => {
         var results = resp.content.results;
-        this.collections.planets = this.collections.planets.concat(results);
+        var planets = [];
+        results.forEach(result => {
+          var new_item = new Models.Planet(result);
+          planets.push(new_item);
+        });
+        this.collections.planets = this.collections.planets.concat(planets);
         this.checkForNext(resp);
       });
     }

@@ -7,11 +7,60 @@
     <h2>
       ${selectedPlanet ? selectedPlanet.name : ''}
     </h2>
-    <h3>Residents:</h3>
-    <ul class="list-unstyled" if.bind="selectedPlanet">
-      <li repeat.for="resident of selectedPlanet.fetchedResidents">
-        <character char.bind="resident"></character>
-      </li>
-    </ul>
+    <div if.bind="selectedPlanet">
+      <div class="row">
+        <div class="col-xs-8">
+          <h3>Map:</h3>
+          <div class="map">
+            <div repeat.for="row of mapRows">
+              <template repeat.for="block of row">
+                <i class="fa fa-2x fa-${block.display} block"></i>
+              </template>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="row">
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4">
+              <a href="#" click.trigger="move('up')">
+                <i class="fa fa-2x fa-arrow-up"></i>
+              </a>
+            </div>
+            <div class="col-xs-4"></div>
+          </div>
+          <div class="row">
+            <div class="col-xs-4">
+              <a href="#" click.trigger="move('left')">
+                <i class="fa fa-2x fa-arrow-left"></i>
+              </a>
+            </div>
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4">
+              <a href="#" click.trigger="move('right')">
+                <i class="fa fa-2x fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4">
+              <a href="#" click.trigger="move('down')">
+                <i class="fa fa-2x fa-arrow-down"></i>
+              </a>
+            </div>
+            <div class="col-xs-4"></div>
+          </div>
+          <div class="row">
+            <h3>Residents:</h3>
+            <ul class="list-unstyled" if.bind="selectedPlanet">
+              <li repeat.for="resident of selectedPlanet.fetchedResidents">
+                <character char.bind="resident"></character>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </template>

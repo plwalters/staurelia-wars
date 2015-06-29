@@ -1,3 +1,6 @@
+export {Character} from 'models/character';
+export {Person} from 'models/regular-index';
+
 // import breeze from 'breeze';
 
 // export class Index {

@@ -9,7 +9,6 @@ export class Character {
     this.datacontext = datacontext;
   }
   toggleOpen(){
-    console.log('toggling')
     this.open = !this.open;
   }
 }

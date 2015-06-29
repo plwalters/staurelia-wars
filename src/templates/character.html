@@ -1,7 +1,8 @@
 <template>
   <a href="#" click.delegate="toggleOpen()">
     <h4>
-    <i class="${open ? 'fa fa-chevron-down' : 'fa fa-chevron-right'}"></i> ${char.name}</h4>
+      <i class="${open ? 'fa fa-chevron-down' : 'fa fa-chevron-right'}"></i> ${char.hasMet ? char.name : '-unknown-'}
+    </h4>
   </a>
   <div class="row" show.bind="open">
     <div class="col-xs-6">

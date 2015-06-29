@@ -18,6 +18,16 @@ export class Person {
   films = [];
   constructor(data){
     Object.assign(this, data);
+    this.onMap = false;
+    this.hasMet = false;
+  }
+  showOnMap(map){
+    let slot = map.getEmptyCharacterSlot();
+    console.log(slot);
+    if (slot) {
+      this.onMap = true;
+      slot.setCharacter(this);
+    }
   }
 }
 
@@ -126,5 +136,117 @@ export class Planet {
   constructor(data){
     Object.assign(this, data);
     this.fetchedResidents = [];
+    this.surface = new Surface(this.url);
   }
+}
+
+let blockTypes = [];
+blockTypes['!'] = { value: 'stop', movable: false};
+blockTypes['O'] = { value: 'plus-square-o', movable: false };
+blockTypes['D'] = { value: 'file', movable: true };
+blockTypes['S'] = { value: 'eject', movable: true };
+blockTypes['_'] = { value: 'stop white', movable: true };
+blockTypes['C'] = { value: 'user-secret', movable: false };
+blockTypes['R'] = { value: 'stop white', movable: false };
+
+export class Surface {
+  blocks = [];
+  planet_id = '';
+  constructor(planet_url){
+    this.planet_id = planet_url;
+    this.blocks = getBlocks();
+  }
+  findStart(){
+    return this.blocks.filter(block => {
+      return block.typeKey === 'S';
+    })[0];
+  }
+  getEmptyCharacterSlot(){
+    return this.blocks.filter(block => {
+      return block.typeKey === 'R' && block.state !== 'occupied';
+    })[0];
+  }
+}
+
+export class Block {
+  row = 0;
+  column = 0;
+  typeKey = '';
+  typeSymbol = '';
+  display = '';
+  movable = false;
+  state = 'closed';
+  constructor(col, row, key, sym, mov){
+    this.row = row;
+    this.column = col;
+    this.typeKey = key;
+    this.typeSymbol = sym;
+    this.display = sym;
+    this.movable = mov;
+    this.character = null;
+  }
+  clear(){
+    this.display = this.typeSymbol;
+  }
+  showChar(){
+    this.display = blockTypes['C'].value;
+  }
+  canBeMovedTo(){
+    if (this.typeKey === 'D' && this.state === 'closed') {
+      this.typeSymbol = 'file-o';
+      this.state = 'open';
+    } else if (this.typeKey === 'R' && this.state === 'occupied') {
+      this.character.hasMet = true;
+    }
+    return this.movable;
+  }
+  setCharacter(char){
+    this.character = char;
+    this.typeSymbol = 'user';
+    this.display = 'user';
+    this.state = 'occupied';
+  }
+}
+
+let this_surface = '' +
+  '!!!!!!!!!!!!!!!!!!!!;' +
+  '!OOOOOO   OOOOOOOO !;' +
+  '!O    O   O      O !;' +
+  '!O  R O   O  R   O !;' +
+  '!O    O   O      O !;' +
+  '!OODOOO   OOOODOOO !;' +
+  '!         O      O !;' +
+  '!         O      O !;' +
+  '!         OOOODOOO !;' +
+  '!                  !;' +
+  '!       S          !;' +
+  '!                  !;' +
+  '!                  !;' +
+  '!OOOOOO   OOOOOOOO !;' +
+  '!O    O   O      O !;' +
+  '!O R  D   D  R   O !;' +
+  '!O    O   O      O !;' +
+  '!OOOOOO   OOOOOOOO !;' +
+  '!                  !;' +
+  '!!!!!!!!!!!!!!!!!!!!;'
+
+function getBlocks(){
+  let these_blocks = this_surface.split('');
+  let row = 1;
+  let col = 1;
+  let allBlocks = [];
+  these_blocks.forEach(block => {
+    if (block === ';') {
+      col = 1;
+      row += 1;
+    } else {
+      col += 1;
+      if (block === ' '){
+        block = '_';
+      }
+      let thisBlock =  new Block(col, row, block, blockTypes[block].value, blockTypes[block].movable);
+      allBlocks.push(thisBlock);
+    }
+  });
+  return allBlocks;
 }

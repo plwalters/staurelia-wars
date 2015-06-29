@@ -1,0 +1,19 @@
+.map {
+
+}
+
+.map .row {
+
+}
+
+i.white {
+  background: white;
+  color: white;
+}
+i.block {
+  width: 20px;
+  height: 20px;
+}
+.map > div {
+  line-height: 1;
+}
